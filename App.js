@@ -1,20 +1,53 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar as ExpoStatusBar } from "expo-status-bar";
+import React from "react";
+import { Text, StyleSheet } from "react-native-paper";
+import { Restaurantscreens } from "./scr/features/restaurants/screens/restaurants-screens";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+//import { Ionicons } from '@expo/vector-icons/Ionicons';
+import { Ionicons } from 'react-native-vector-icons/Ionicons';
+//import { restaurantRequest} from './scr/services/restaurant/restaurant.service';
+import { RestaurantsContextProvider } from "./scr/services/restaurant/restaurant.context";
+import { LocationContextProvider } from "./scr/services/location/location.context";
+
+
+
+const Tab = createBottomTabNavigator();
+
+function Map (){
+  return(
+<Text>
+ Maps
+</Text>
+  );
+}
+function Settings(){
+  return(
+  <Text >
+    Settings
+  </Text>
+  );
+  }
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+<LocationContextProvider>
+<RestaurantsContextProvider>
+      <NavigationContainer>
+     
+      <Tab.Navigator>
+      <Tab.Screen name="Restaurants" component={Restaurantscreens} />
+        <Tab.Screen name="Maps" component={Map} />
+        <Tab.Screen name="Settings" component={Settings} />
+      </Tab.Navigator>
+    
+      </NavigationContainer>
+     
+</RestaurantsContextProvider>
+</LocationContextProvider>
+      <ExpoStatusBar style="auto" />
+    </>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
